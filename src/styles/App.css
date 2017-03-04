@@ -1,5 +1,12 @@
 /* Base Application Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+}
 .iconfont{
   font-size: 12px;
   margin-right: 5px;
+}
+#app .blogContainer {
+  overflow: hidden;
 }
