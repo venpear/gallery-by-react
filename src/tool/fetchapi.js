@@ -68,7 +68,6 @@ module.exports = {
 	},
   postForm: function(url, data = {}) {
 		url = this.prepareUrl(url);
-		addAuth(data);
 		return fetch(url, {
 			credentials: 'same-origin',
 			method: 'POST',

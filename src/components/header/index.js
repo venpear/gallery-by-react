@@ -1,40 +1,27 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  Menu,
-  Icon,
-  Tabs,
-  message,
-  Form,
-  Input,
-  Button,
-  CheckBox,
-  Modal
-} from 'antd';
+import {  Row, Col,  Menu, Icon,  Tabs,  Modal, Button, Link} from 'antd';
+import {Signin, Signout} from '../form';
 import styles from './index.scss';
-const FormItem = Form.Item;
-const SubMenu = Menu.SubMenu;
 const TabPane = Tabs.TabPane;
-const MenuItemGroup = Menu.ItemGroup;
-
 class Header extends React.Component {
   constructor() {
     super()
     this.state = {
       current: 'top',
-			modalVisible: false,
-			action: 'login',
-			hasLogined: false,
-			userNickName: '',
-			userid: 0
+      modalVisible: false,
+      action: 'login',
+      hasLogined: false,
+      userNickName: '',
+      userid: 0
     }
     this.handleClick = this.handleClick.bind(this);
     this.callback = this.callback.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
   setModalVisible(value) {
     this.setState({modalVisible: value});
+  }
+  showUsername(name){
+    this.setState({hasLogined:true,userNickName:name})
   }
   handleClick(e) {
     if (e.key == "register") {
@@ -57,27 +44,7 @@ class Header extends React.Component {
     localStorage.userNickName = '';
     this.setState({hasLogined: false});
   }
-  handleSubmit(e){
-    e.preventDefault();
-    let formData = this.props.form.getFieldsValue();
-    console.log('formData',formData);
-  }
   render() {
-    let {getFieldDecorator} = this.props.form;
-    const userShow = this.state.hasLogined
-      ? <Menu.Item key="logout" className={styles.register}>
-          <Button type="primary" htmlType="button">{this.state.userNickName}</Button>
-          &nbsp;&nbsp;
-          <Link target="_blank" to={`/usercenter`}>
-            <Button type="dashed" htmlType="button">个人中心</Button>
-          </Link>
-          &nbsp;&nbsp;
-          <Button type="ghost" htmlType="button" onClick={this.logout}>退出</Button>
-        </Menu.Item>
-      : <Menu.Item key="register" className={styles.register}>
-        <i className="iconfont icon-account"/>
-        注册/登录
-      </Menu.Item>;
     return (
       <Row>
         <Col span={2}></Col>
@@ -119,34 +86,33 @@ class Header extends React.Component {
               <i className="iconfont icon-account"></i>
               娱乐
             </Menu.Item>
-            {userShow}
+            {
+              this.state.hasLogined &&
+              <Menu.Item key="logout" className={styles.register}>
+                  <Button type="primary" htmlType="button">zhang</Button>
+                  &nbsp;&nbsp;
+                  <Link target="_blank">
+                    <Button type="dashed" htmlType="button">个人中心</Button>
+                  </Link>
+                  &nbsp;&nbsp;
+                  <Button type="ghost" htmlType="button" onClick={this.logout}>退出</Button>
+                </Menu.Item>
+            }
+            {
+              !this.state.hasLogined &&
+              <Menu.Item key="register" className={styles.register}>
+                <i className="iconfont icon-account"/>
+                注册/登录
+              </Menu.Item>
+            }
           </Menu>
           <Modal title="用户中心" wrapClassName="vertical-center-modal" visible={this.state.modalVisible} onCancel= {()=>this.setModalVisible(false)} onOk={() => this.setModalVisible(false)} okText="关闭">
             <Tabs type="card" onChange={this.callback}>
               <TabPane tab="登录" key="1">
-                <Form horizontal onSubmit={this.handleSubmit}>
-                  <FormItem label="账户">
-                    <Input placeholder="请输入您的账号" {...getFieldDecorator('userName')}/>
-                  </FormItem>
-                  <FormItem label="密码">
-                    <Input type="password" placeholder="请输入您的密码" {...getFieldDecorator('password')}/>
-                  </FormItem>
-                  <Button type="primary" htmlType="submit">登录</Button>
-                </Form>
+                <Signin close={()=>this.setModalVisible(false)} showUsername={ name => this.showUsername(name)}></Signin>
               </TabPane>
               <TabPane tab="注册" key="2">
-                <Form horizontal onSubmit={this.handleSubmit}>
-                  <FormItem label="账户">
-                    <Input placeholder="请输入您的账号" {...getFieldDecorator('r_userName')}/>
-                  </FormItem>
-                  <FormItem label="密码">
-                    <Input type="password" placeholder="请输入您的密码" {...getFieldDecorator('r_password')}/>
-                  </FormItem>
-                  <FormItem label="确认密码">
-                    <Input type="password" placeholder="请再次输入您的密码" {...getFieldDecorator('r_confirmPassword')}/>
-                  </FormItem>
-                  <Button type="primary" htmlType="submit">注册</Button>
-                </Form>
+                 <Signout close={()=>this.setModalVisible(false)}></Signout>
               </TabPane>
             </Tabs>
           </Modal>
@@ -157,4 +123,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header = Form.create({})(Header);
+export default Header;
