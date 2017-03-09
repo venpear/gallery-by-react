@@ -9,6 +9,9 @@ import App from './containers/Layout';
 import Home from './containers/home';
 import Login from './containers/login'
 
+import Fetch from './tool/fetchApi';
+window.$$ = Fetch;
+
 // Render the main component into the dom
 
 export default class Root extends React.Component {
