@@ -82,18 +82,14 @@ class Header extends React.Component {
               <i className="iconfont icon-email"></i>
               社会
             </Menu.Item>
-            <Menu.Item key="yule">
-              <i className="iconfont icon-account"></i>
-              娱乐
-            </Menu.Item>
             {
               this.state.hasLogined &&
               <Menu.Item key="logout" className={styles.register}>
-                  <Button type="primary" htmlType="button">zhang</Button>
+                  <Button type="primary" htmlType="button">{this.state.userNickName}</Button>
                   &nbsp;&nbsp;
-                  <Link target="_blank">
-                    <Button type="dashed" htmlType="button">个人中心</Button>
-                  </Link>
+                  <Button type="dashed" htmlType="button">个人中心</Button>
+                  {/* <Link target="_blank">
+                  </Link> */}
                   &nbsp;&nbsp;
                   <Button type="ghost" htmlType="button" onClick={this.logout}>退出</Button>
                 </Menu.Item>
