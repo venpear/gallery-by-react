@@ -1,6 +1,6 @@
 // import 'core-js/fn/object/assign';
 import React from 'react';
-import {Router, Route, hashHistory, Link} from 'react-router'
+import {Router, Route, browserHistory, Link} from 'react-router'
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 //引用公用的样式
@@ -17,7 +17,7 @@ window.$$ = Fetch;
 export default class Root extends React.Component {
   render() {
     return (
-      <Router history={hashHistory}>
+      <Router history={browserHistory}>
         <Route path="/" component={App}>
           <Route path="home" component={Home}></Route>
           <Route path="login" component={Login}></Route>
